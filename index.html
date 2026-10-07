@@ -5,23 +5,29 @@
 <meta name="description" content="CTI Executive Suites - Luxury interactive 3D office interior layout with furniture, lighting and AC plan (all sizes in cm).">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#c9a24d;--navy:#0e1a2b;--ink:#f4efe3;--card:#0e1a2bdd;--bd:#c9a24d88;--bg:#efede7}
+:root{--gold:#c9a24d;--navy:#0e1a2b;--ink:#f4efe3;--card:#0e1a2bea;--bd:#c9a24d88;--bg:#efede7}
 html,body{height:100%;margin:0;background:var(--navy);font-family:Inter,system-ui,Arial,sans-serif;overflow:hidden}
 #c{position:fixed;inset:0;width:100%;height:100%;touch-action:none}
-header{position:fixed;left:0;right:0;top:0;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;background:linear-gradient(180deg,#0e1a2bf2,#0e1a2bcc);border-bottom:1px solid var(--gold);color:var(--ink)}
-header h1{margin:0;font:700 clamp(18px,5vw,26px) 'Cormorant Garamond',Georgia,serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
-header p{margin:2px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.8}
-.bar{position:fixed;left:0;right:0;top:calc(66px + env(safe-area-inset-top,0px));display:flex;gap:6px;padding:8px;flex-wrap:wrap}
-button{background:var(--card);color:var(--ink);border:1px solid var(--gold);border-radius:999px;padding:7px 14px;font:600 12px Inter,Arial,sans-serif;letter-spacing:.04em}
+header{position:fixed;left:0;right:0;top:0;padding:calc(6px + env(safe-area-inset-top,0px)) 14px 6px;background:linear-gradient(180deg,#0e1a2bf2,#0e1a2bd0);border-bottom:1px solid var(--gold);color:var(--ink);pointer-events:none}
+header h1{margin:0;font:700 clamp(15px,4.2vw,22px) 'Cormorant Garamond',Georgia,serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);line-height:1.1}
+header p{margin:1px 0 0;font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.75}
+#dk{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));display:flex;gap:6px;align-items:center;overflow-x:auto;white-space:nowrap;padding:7px;background:var(--card);border:1px solid var(--gold);border-radius:18px;scrollbar-width:none;box-shadow:0 6px 24px #0007}
+#dk::-webkit-scrollbar{display:none}
+#dk .sp{width:1px;height:22px;background:var(--gold);opacity:.5;flex:none}
+button{flex:none;background:#16263d;color:var(--ink);border:1px solid #c9a24d99;border-radius:999px;padding:7px 12px;font:600 12px Inter,Arial,sans-serif;letter-spacing:.04em}
 button:active{background:var(--gold);color:var(--navy)}
-#leg{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));max-height:32%;overflow:auto;background:var(--card);color:var(--ink);border:1px solid var(--gold);border-radius:14px;padding:10px 12px;font-size:12px}
-#leg div{display:flex;align-items:center;gap:8px;padding:2px 0}
-#leg i{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid #fff6}
-#leg b{margin-left:auto;white-space:nowrap;color:var(--gold)}
+button.off{opacity:.45;border-style:dashed}
+#mn{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(8px + env(safe-area-inset-bottom,0px));background:var(--card)}
+#leg{position:fixed;left:8px;right:8px;bottom:calc(70px + env(safe-area-inset-bottom,0px));max-height:46%;overflow:auto;background:var(--card);color:var(--ink);border:1px solid var(--gold);border-radius:14px;padding:8px 12px;font-size:12px}
+#leg .h{color:var(--gold);font:700 13px 'Cormorant Garamond',Georgia,serif;letter-spacing:.1em;text-transform:uppercase;margin:8px 0 4px;border-bottom:1px solid #c9a24d55;padding-bottom:3px}
+#leg .r{display:flex;gap:10px;align-items:flex-start;padding:4px 0}
+#leg i{width:16px;height:16px;border-radius:4px;flex:none;border:1px solid #fff8;margin-top:2px}
+#leg b{display:block;font-weight:600}#leg small{display:block;color:#d9cfae;line-height:1.35}
 </style></head><body>
 <header><h1>CTI Executive Suites</h1><p>Premium 3D Office Interior Layout</p></header>
 <canvas id="c"></canvas>
-<div class="bar"><button id="top">From above</button><button id="iso">3D view</button><button id="sz">Sizes: ON</button><button id="zi">Zoom +</button><button id="zo">Zoom −</button><button id="fb">From below</button><button id="cl">Lights/AC: ON</button><button id="lg">Legend</button></div>
+<div id="dk"><button id="top">▣ Top</button><button id="iso">◈ 3D</button><button id="fb">▲ Below</button><button id="zi">＋</button><button id="zo">－</button><span class="sp"></span><button id="sz">Sizes</button><button id="cl">Lights/AC</button><button id="fc">False Ceiling</button><button id="sv" class="off">Labels</button><span class="sp"></span><button id="rot" class="off">⟳ Rotate</button><button id="nt" class="off">☾ Night</button><button id="shot">◎ Photo</button><button id="fs">⛶ Full</button><button id="lg">☰ Legend</button><button id="hd">⌄ Hide</button></div>
+<button id="mn">☰ Menu</button>
 <div id="leg"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -40,8 +46,8 @@ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c
 function add(type,x,z,w,d,h,y0=0,l=true){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:C[type],transparent:type=='part',opacity:type=='part'?.4:1}));
 m.position.set(x+w/2,y0+h/2,z+d/2);root.add(m);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x00000055})));
 if(l){(used[type]=used[type]||new Set()).add(w+'×'+d);label(w+'×'+d,x+w/2,y0+h+10,z+d/2,lab,Math.max(60,Math.min(w,110)))}return m}
-function chair(x,z,back,t='chair'){add(t,x-22,z-22,45,45,8,42);add(t,x-3,z-3,6,6,42,0,false);
-const b={n:[x-22,z-22,45,6],s:[x-22,z+16,45,6],w:[x-22,z-22,6,45],e:[x+16,z-22,6,45]}[back];add(t,b[0],b[1],b[2],b[3],40,50,false)}
+function chair(x,z,back,t='chair'){add(t,x-30,z-30,60,60,8,42);add(t,x-3,z-3,6,6,42,0,false);
+const b={n:[x-30,z-30,60,6],s:[x-30,z+24,60,6],w:[x-30,z-30,6,60],e:[x+24,z-30,6,60]}[back];add(t,b[0],b[1],b[2],b[3],40,50,false)}
 function plant(x,z){const m=new THREE.Mesh(new THREE.CylinderGeometry(15,12,70,12),new THREE.MeshLambertMaterial({color:C.plant}));m.position.set(x,35,z);root.add(m);(used.plant=used.plant||new Set()).add('Ø30×70')}
 // floor + room labels (original layout)
 const rooms=[['Workstation',0,0,427,648],['Manager 2',427,0,351,302],['Manager 1',427,302,351,346],['Reception',0,648,414,234],['Kitchen',414,648,212,234],['Washroom',626,648,152,234]];
@@ -50,35 +56,49 @@ rooms.forEach(([n,x,z,w,d])=>label(n+' '+w+'×'+d+' cm',x+w/2,3,z+d/2+(n=='Works
 label('882 cm',-30,3,D/2,rl,90,'#555','rgba(255,255,255,.7)');label('778 cm',W/2,3,D+30,rl,90,'#555','rgba(255,255,255,.7)');
 const wm=new THREE.MeshLambertMaterial({color:0xaaaaaa,transparent:true,opacity:.22,side:THREE.DoubleSide});
 function wall(x,z,w,d){const m=new THREE.Mesh(new THREE.BoxGeometry(w,270,d),wm);m.position.set(x+w/2,135,z+d/2);root.add(m);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x888888})))}
-wall(-12,0,12,D);wall(W,0,12,D);wall(0,-12,W,12);wall(0,D,270,12);wall(360,D,W-360,12);wall(427,0,8,648);wall(427,296,351,12);wall(427,648,351,8);wall(414,648,8,234);wall(626,648,8,234);
-// ---- FURNITURE (placed as in the render)
-// Workstation: 6 desks (3 columns x 2) + chairs
-[10,153,297].forEach(x=>{add('desk',x,225,120,60,75);add('desk',x,295,120,60,75);add('part',x,285,120,4,110,0,false);chair(x+60,203,'n');chair(x+60,377,'s')});
-// left & right corner tables + chairs + plants
-add('desk',30,20,120,60,75);add('desk',30,80,60,60,75);chair(120,110,'w');plant(14,30);
-add('desk',285,20,120,60,75);add('desk',345,80,60,60,75);chair(310,115,'e');plant(415,30);
-// Manager 2 (L desk top-right + chair + plant)
-add('desk',600,25,150,60,75);add('desk',690,85,60,70,75);chair(645,125,'w');plant(762,30);
-// Manager 1 (L desk + chair + 2 plants)
-add('desk',560,372,170,60,75);add('desk',670,432,60,80,75);chair(600,470,'s');plant(755,325);plant(762,580);
+wall(-20,0,20,D);wall(W,0,20,D);wall(0,-20,W,20);wall(0,D,270,20);wall(370,D,W-370,20);wall(421,0,12,648);wall(427,296,351,12);wall(427,642,351,12);wall(408,648,12,234);wall(620,648,12,234);
+// ---- FURNITURE (sizes per reference sheet: work desk 100x60, corner desk+side table 152x162, chair 60x60)
+// Workstation: 6 desks joined with no gap (3 x 2 = 300x120 block) + chairs
+[64,164,264].forEach(x=>{add('desk',x,240,100,60,75);add('desk',x,300,100,60,75);chair(x+50,214,'n');chair(x+50,386,'s')});
+add('part',64,298,300,4,110,0,false);
+// left & right corner tables (bar 152x60 + side table 60x102 = 152x162) + chairs + plants
+add('desk',30,20,152,60,75);add('desk',30,80,60,102,75);chair(120,112,'w');plant(14,30);
+add('desk',250,20,152,60,75);add('desk',342,80,60,102,75);chair(312,112,'e');plant(415,30);
+// Manager 2 (corner desk 152x162 + chair + plant)
+add('desk',590,25,152,60,75);add('desk',682,85,60,102,75);chair(652,117,'w');plant(762,30);
+// Manager 1 (corner desk 152x162 + chair + 2 plants)
+add('desk',560,372,152,60,75);add('desk',652,432,60,102,75);chair(600,472,'s');plant(755,325);plant(762,580);
 // Reception: CTI wood panel, U counter, chair, plants
 add('panel',5,652,195,8,230);add('panel',5,652,8,200,230,0,false);
-add('counter',31,763,30,99,105);add('counter',31,805,160,57,105,0,false);add('counter',122,731,69,60,105);chair(90,765,'e');
+add('counter',31,763,30,99,105);add('counter',31,805,160,57,105,0,false);add('counter',122,731,69,60,105);chair(92,765,'e');
 plant(218,762);plant(218,845);plant(367,860);
 // Kitchen: counter + sink / Washroom: basin + WC
 add('counter',418,660,50,200,90);add('counter',428,700,30,40,8,90);
 add('counter',745,690,30,45,85);add('counter',735,775,40,60,40);add('counter',735,815,40,20,80,0,false);
-// ---- CEILING LAYER (original lights / AC / points, same colours)
-const ce=new THREE.Group();root.add(ce);
-function ceil(x,z,w,d,col,op=1){const m=new THREE.Mesh(new THREE.BoxGeometry(w,4,d),new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:op}));m.position.set(x,268,z);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x00000044})));ce.add(m)}
-function dot(x,z,col,r=6){const m=new THREE.Mesh(new THREE.SphereGeometry(r,10,8),new THREE.MeshBasicMaterial({color:col}));m.position.set(x,268,z);ce.add(m)}
-[[113,93],[310,93],[110,226],[309,226],[105,386],[308,386],[102,527],[306,527],[504,66],[691,66],[506,221],[695,223],[507,367],[699,367],[509,552],[703,552],[58,700],[293,700],[522,744]].forEach(p=>ceil(p[0],p[1],60,60,0xfad6a0,.8));
-[[211,86,45,30],[202,534,45,30],[601,231,42,26],[606,559,42,26],[38,808,42,26]].forEach(p=>ceil(...p.slice(0,2),p[2],p[3],0x4a86d6));
-[[112,159],[310,159],[105,455],[307,455],[598,57],[603,355],[174,677]].forEach(p=>ceil(p[0],p[1],26,27,0x66b2f2));
-[[210,160],[205,456],[599,143],[604,459],[604,459],[172,754],[523,835]].forEach(p=>dot(p[0],p[1],0xe8606a));
-[[208,231],[206,382],[496,143],[498,459],[231,799]].forEach(p=>dot(p[0],p[1],0x9b8cf0));
-ceil(206,306,40,14,0x7cb342);ceil(332,867,50,16,0x3bb5a0);dot(712,751,0xf2d94e,8);dot(715,830,0x999999,8);
-{const g=new THREE.BufferGeometry().setFromPoints([[26,37],[382,37],[382,591],[26,591]].map(p=>new THREE.Vector3(p[0],268,p[1])));ce.add(new THREE.LineLoop(g,new THREE.LineBasicMaterial({color:0xf0b44c})))}
+// ---- CEILING / SERVICES LAYER (same positions & colours as before, now named)
+const CT={led:['Amber','LED Panel Light',0xfad6a0,'LED'],acu:['Royal Blue','AC Cassette Unit',0x4a86d6,'AC Unit'],dif:['Sky Blue','AC Supply Diffuser',0x66b2f2,'Diffuser'],smk:['Red','Smoke Detector',0xe8606a,'Smoke Det.'],cctv:['Purple','CCTV Camera',0x9b8cf0,'CCTV'],db:['Lime Green','Distribution Board (DB)',0x7cb342,'DB'],door:['Teal','Main Entrance Glass Door',0x3bb5a0,'Door'],wl:['Yellow','Washroom Light',0xf2d94e,'WC Light'],exh:['Grey','Exhaust Fan',0x999999,'Exhaust'],cove:['Gold Outline','LED Cove Light Line',0xf0b44c,'Cove'],fcb:['Deep Magenta','False Ceiling Bulkhead Lines',0xb5179e,'FC Border'],fcp:['Rose Pink','False Ceiling Recessed Panel',0xf4a6c0,'FC Panel']};
+const ce=new THREE.Group();root.add(ce);const svl=new THREE.Group();svl.visible=false;root.add(svl);
+const cg={},cc={},cs={};
+function reg(k,sz,x,z){cc[k]=(cc[k]||0)+1;(cs[k]=cs[k]||new Set()).add(sz);label(CT[k][3]+' '+sz,x,290,z,svl,80,'#111','rgba(255,240,200,.9)')}
+function grp(k){if(!cg[k]){cg[k]=new THREE.Group();ce.add(cg[k])}return cg[k]}
+function ceil(k,x,z,w,d,op=1){const m=new THREE.Mesh(new THREE.BoxGeometry(w,4,d),new THREE.MeshLambertMaterial({color:CT[k][2],transparent:true,opacity:op}));m.position.set(x,268,z);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x00000044})));grp(k).add(m);reg(k,w+'×'+d,x,z)}
+function dot(k,x,z,r=6){const m=new THREE.Mesh(new THREE.SphereGeometry(r,10,8),new THREE.MeshBasicMaterial({color:CT[k][2]}));m.position.set(x,268,z);grp(k).add(m);reg(k,'Ø'+r*2,x,z)}
+[[113,93],[310,93],[110,226],[309,226],[105,386],[308,386],[102,527],[306,527],[504,66],[691,66],[506,221],[695,223],[507,367],[699,367],[509,552],[703,552],[58,700],[293,700],[522,744]].forEach(p=>ceil('led',p[0],p[1],60,60,.8));
+[[211,86],[202,534],[601,231],[606,559],[38,808]].forEach(p=>ceil('acu',p[0],p[1],p[0]==38||p[0]==202||p[0]==211?45:42,p[0]==38||p[0]==202||p[0]==211?30:26));
+[[112,159],[310,159],[105,455],[307,455],[598,57],[603,355],[174,677]].forEach(p=>ceil('dif',p[0],p[1],26,27));
+[[210,160],[205,456],[599,143],[604,459],[172,754],[523,835]].forEach(p=>dot('smk',p[0],p[1]));
+[[208,231],[206,382],[496,143],[498,459],[231,799]].forEach(p=>dot('cctv',p[0],p[1]));
+ceil('db',206,306,40,14);ceil('door',320,867,100,16);dot('wl',712,751,8);dot('exh',715,830,8);
+{const g=new THREE.BufferGeometry().setFromPoints([[26,37],[382,37],[382,591],[26,591]].map(p=>new THREE.Vector3(p[0],268,p[1])));grp('cove').add(new THREE.LineLoop(g,new THREE.LineBasicMaterial({color:0xf0b44c})));cc.cove=1;cs.cove=new Set(['356×554']);label('Cove 356×554',204,290,37,svl,80,'#111','rgba(255,240,200,.9)')}
+// ---- FALSE CEILING: ONE bulkhead frame for the whole office (2 lines full length + 2 lines full width), 6 cm gap from walls on all 4 sides
+const GAP=6,BW=15;const fcg=new THREE.Group();root.add(fcg);
+['fcb','fcp'].forEach(k=>{cg[k]=new THREE.Group();fcg.add(cg[k])});
+function fbox(k,w,h,d,x,y,z,op){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:CT[k][2],transparent:op<1,opacity:op}));m.position.set(x,y,z);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x00000055})));cg[k].add(m)}
+{const ox=GAP,oz=GAP,ow=W-2*GAP,od=D-2*GAP,iw=ow-2*BW,id=od-2*BW,cx=ox+ow/2,cz=oz+od/2;
+fbox('fcb',ow,10,BW,cx,260,oz+BW/2,1);fbox('fcb',ow,10,BW,cx,260,oz+od-BW/2,1);fbox('fcb',BW,10,id,ox+BW/2,260,cz,1);fbox('fcb',BW,10,id,ox+ow-BW/2,260,cz,1);
+fbox('fcp',iw,2,id,cx,266,cz,.3);
+reg('fcb','Width line '+ow+'×'+BW,cx,oz+BW/2);reg('fcb','Width line '+ow+'×'+BW,cx,oz+od-BW/2);reg('fcb','Length line '+BW+'×'+id,ox+BW/2,cz);reg('fcb','Length line '+BW+'×'+id,ox+ow-BW/2,cz);
+reg('fcp',iw+'×'+id,cx,cz)}
 // ---- camera controls
 let th=0,ph=.02,rad=1500;
 function upd(){cam.position.set(rad*Math.sin(ph)*Math.sin(th),rad*Math.cos(ph),rad*Math.sin(ph)*Math.cos(th));cam.lookAt(0,0,0)}
@@ -92,12 +112,33 @@ if(P.size==1){th-=(e.clientX-o[0])*.008;ph=Math.min(3.12,Math.max(.02,ph-(e.clie
 else{P.set(e.pointerId,[e.clientX,e.clientY]);const a=[...P.values()],d=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]);if(pd)rad=Math.min(4000,Math.max(300,rad*pd/d));pd=d}upd()});
 cv.addEventListener('wheel',e=>{rad=Math.min(4000,Math.max(300,rad*(1+e.deltaY*.001)));upd()},{passive:true});
 const $=id=>document.getElementById(id);
-$('top').onclick=()=>{th=0;ph=.02;rad=1500;upd()};$('fb').onclick=()=>{th=0;ph=3.12;rad=1500;upd()};$('cl').onclick=()=>{ce.visible=!ce.visible;$('cl').textContent='Lights/AC: '+(ce.visible?'ON':'OFF')};
+$('top').onclick=()=>{th=0;ph=.02;rad=1500;upd()};$('fb').onclick=()=>{th=0;ph=3.12;rad=1500;upd()};$('cl').onclick=()=>{ce.visible=!ce.visible;$('cl').classList.toggle('off',!ce.visible)};
 $('iso').onclick=()=>{th=-.6;ph=.95;rad=1500;upd()};
 $('zi').onclick=()=>{rad=Math.max(300,rad*.8);upd()};$('zo').onclick=()=>{rad=Math.min(4000,rad*1.25);upd()};
-$('sz').onclick=()=>{lab.visible=!lab.visible;$('sz').textContent='Sizes: '+(lab.visible?'ON':'OFF')};
+$('sz').onclick=()=>{lab.visible=!lab.visible;$('sz').classList.toggle('off',!lab.visible)};
 $('lg').onclick=()=>{const l=$('leg');l.style.display=l.style.display=='none'?'block':'none'};
-// legend
-$('leg').innerHTML='<div><b style="margin:0">Total 778 × 882 cm. Sizes in cm (W×D). Ceiling: Amber = LED panels and cove, Blue = AC, other dots = original points</b></div>'+Object.keys(used).map(k=>`<div><i style="background:#${C[k].toString(16).padStart(6,'0')}"></i>${NAME[k]}<b>${[...used[k]].join(', ')}</b></div>`).join('');
-(function loop(){requestAnimationFrame(loop);R.render(S,cam)})();
+// legend (structure + furniture + ceiling services)
+const hx=n=>'#'+n.toString(16).padStart(6,'0');
+const FN={desk:['Brown','Desk / Table'],chair:['Charcoal','Staff Chair'],vchair:['Teal','Visitor Chair'],sofa:['Slate Blue','Sofa'],counter:['Ivory White','Counter / Basin / WC'],panel:['Orange','CTI Wood Wall Panel'],plant:['Green','Plant'],fridge:['Silver','Fridge'],part:['Glass Blue','Glass Partition (Workstation)']};
+const DET={desk:'Work desks: 6 pcs 100×60, joined with no gap as one 300×120 block · Corner Desk + Side Table (L-shape, overall 152×162 = bar 152×60 + side table 60×102): 4 pcs (2 workstation corners, 2 manager rooms)',counter:'Reception U-counter · Kitchen counter 50×200 + sink 30×40 · Basin 30×45 · WC 40×60 + tank 40×20'};
+function row(sw,t,sub,k){return `<div class="r" ${k?`data-k="${k}"`:''}><i style="background:${sw}"></i><span><b>${t}</b><small>${sub}</small></span></div>`}
+const CD={fcb:'Single frame for whole office: 2 lines full length (882 side) + 2 lines full width (778 side) · 6 cm gap from walls on all 4 sides · line width 15 cm',fcp:'One recessed tray panel inside the bulkhead frame (as in reference photo)'};
+let h='<div class="h">Total 778 × 882 cm · all sizes in cm (W×D) · tap a ceiling row to hide/show it</div><div class="h">A. Structure</div>';
+h+=row('#ffffff','White · Floor','778×882 cm full floor')+row('#aaaaaa','Grey (translucent) · Outer & Internal Walls','Height 270 · External wall 20 · Internal wall 12 · Main door opening 100')+
+rooms.map(r=>row('#ffffff','Room · '+r[0],r[3]+'×'+r[4]+' cm')).join('');
+h+='<div class="h">B. Furniture</div>'+Object.keys(used).map(k=>row(hx(C[k]),FN[k][0]+' · '+FN[k][1],[...used[k]].join(', ')+(DET[k]?'<br>'+DET[k]:''))).join('');
+h+='<div class="h">C. Ceiling / Services</div>'+Object.keys(CT).filter(k=>cc[k]).map(k=>row(hx(CT[k][2]),CT[k][0]+' · '+CT[k][1],cc[k]+' pcs · '+[...cs[k]].join(', ')+(CD[k]?'<br>'+CD[k]:''),k)).join('');
+$('leg').innerHTML=h;
+document.querySelectorAll('#leg .r[data-k]').forEach(e=>e.onclick=()=>{const g=cg[e.dataset.k];g.visible=!g.visible;e.style.opacity=g.visible?1:.4});
+$('fc').onclick=()=>{fcg.visible=!fcg.visible;$('fc').classList.toggle('off',!fcg.visible)};
+$('sv').onclick=()=>{svl.visible=!svl.visible;$('sv').classList.toggle('off',!svl.visible)};
+let auto=false,night=false;
+$('rot').onclick=()=>{auto=!auto;$('rot').classList.toggle('off',!auto)};
+$('nt').onclick=()=>{night=!night;$('nt').classList.toggle('off',!night);S.background=new THREE.Color(night?0x12161d:0xefede7);fm.material.color.set(night?0x2a2f38:0xffffff)};
+$('shot').onclick=()=>{R.render(S,cam);const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download='CTI-Executive-Suites-3D.png';a.click()};
+$('fs').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+$('hd').onclick=()=>{$('dk').style.display='none';$('leg').style.display='none';$('mn').style.display='block'};
+$('mn').onclick=()=>{$('dk').style.display='flex';$('mn').style.display='none'};
+$('leg').style.display='none';
+(function loop(){requestAnimationFrame(loop);if(auto&&!P.size){th+=.005;upd()}R.render(S,cam)})();
 </script></body></html>
