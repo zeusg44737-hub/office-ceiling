@@ -1,111 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Office false ceiling - 3D view (cm)</title>
+<title>CTI Executive Suites | Premium 3D Office Layout</title>
+<meta name="description" content="CTI Executive Suites - Luxury interactive 3D office interior layout with furniture, lighting and AC plan (all sizes in cm).">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FAF9F5;--fg:#2C2C2A;--mut:#5F5E5A;--card:#fff;--bd:#D3D1C7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1F1E1D;--fg:#F1EFE8;--mut:#B4B2A9;--card:#2C2C2A;--bd:#5F5E5A}}
-:root[data-theme="dark"]{--bg:#1F1E1D;--fg:#F1EFE8;--mut:#B4B2A9;--card:#2C2C2A;--bd:#5F5E5A}
-html,body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:900px;margin:0 auto;padding:14px}
-h1{font-size:20px;font-weight:500;margin:0 0 4px}
-p{margin:0 0 10px;font-size:14px;line-height:1.5;color:var(--mut)}
-canvas{width:100%;height:68vh;min-height:360px;display:block;border-radius:12px;touch-action:none}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-button{padding:10px 14px;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:8px;font-size:14px}
-.lg{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:13px;margin:6px 0 12px}
-.lg span{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
-.note{border:1px solid var(--bd);background:var(--card);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.5}
-</style>
-</head>
-<body>
-<main>
-<h1>Office false ceiling - 3D view</h1>
-<p>Drag to rotate. Use the buttons to switch view or zoom. All sizes in cm.</p>
+:root{--gold:#c9a24d;--navy:#0e1a2b;--ink:#f4efe3;--card:#0e1a2bdd;--bd:#c9a24d88;--bg:#efede7}
+html,body{height:100%;margin:0;background:var(--navy);font-family:Inter,system-ui,Arial,sans-serif;overflow:hidden}
+#c{position:fixed;inset:0;width:100%;height:100%;touch-action:none}
+header{position:fixed;left:0;right:0;top:0;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;background:linear-gradient(180deg,#0e1a2bf2,#0e1a2bcc);border-bottom:1px solid var(--gold);color:var(--ink)}
+header h1{margin:0;font:700 clamp(18px,5vw,26px) 'Cormorant Garamond',Georgia,serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+header p{margin:2px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.8}
+.bar{position:fixed;left:0;right:0;top:calc(66px + env(safe-area-inset-top,0px));display:flex;gap:6px;padding:8px;flex-wrap:wrap}
+button{background:var(--card);color:var(--ink);border:1px solid var(--gold);border-radius:999px;padding:7px 14px;font:600 12px Inter,Arial,sans-serif;letter-spacing:.04em}
+button:active{background:var(--gold);color:var(--navy)}
+#leg{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));max-height:32%;overflow:auto;background:var(--card);color:var(--ink);border:1px solid var(--gold);border-radius:14px;padding:10px 12px;font-size:12px}
+#leg div{display:flex;align-items:center;gap:8px;padding:2px 0}
+#leg i{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid #fff6}
+#leg b{margin-left:auto;white-space:nowrap;color:var(--gold)}
+</style></head><body>
+<header><h1>CTI Executive Suites</h1><p>Premium 3D Office Interior Layout</p></header>
 <canvas id="c"></canvas>
-<div class="row">
-<button id="bA">From above</button>
-<button id="bB">From below</button>
-<button id="bP">Zoom +</button>
-<button id="bM">Zoom -</button>
-</div>
-<div class="lg">
-<div><span style="background:#FAC775"></span>LED panel 60x60</div>
-<div><span style="background:#378ADD"></span>AC supply / return</div>
-<div><span style="background:#E24B4A"></span>Fire sprinkler</div>
-<div><span style="background:#7F77DD"></span>Smoke detector</div>
-<div><span style="background:#639922"></span>Emergency light</div>
-<div><span style="background:#1D9E75"></span>Exit sign (above door)</div>
-</div>
-<div class="note">Draft for review. Ceiling height assumed 270 cm (tray recess 285 cm). Kitchen and washroom split is approximate. Final positions to be confirmed by fire, AC and electrical vendors before work starts.</div>
-</main>
+<div class="bar"><button id="top">From above</button><button id="iso">3D view</button><button id="sz">Sizes: ON</button><button id="zi">Zoom +</button><button id="zo">Zoom −</button><button id="fb">From below</button><button id="cl">Lights/AC: ON</button><button id="lg">Legend</button></div>
+<div id="leg"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const T=THREE,cv=document.getElementById('c');
-const R=new T.WebGLRenderer({canvas:cv,antialias:true});
-R.setPixelRatio(Math.min(devicePixelRatio,2));R.setClearColor(0xEDEBE4,1);
-const scene=new T.Scene(),camera=new T.PerspectiveCamera(38,1,10,8000);
-scene.add(new T.AmbientLight(0xffffff,0.75));
-let d1=new T.DirectionalLight(0xffffff,0.5);d1.position.set(300,800,200);scene.add(d1);
-let d2=new T.DirectionalLight(0xffffff,0.5);d2.position.set(300,-800,200);scene.add(d2);
-const OW=778,OL=882,WH=270;
-function mat(c,o){return new T.MeshLambertMaterial({color:c,transparent:o<1,opacity:o,side:T.DoubleSide});}
-function box(w,h,d,x,y,z,m,edge){const g=new T.BoxGeometry(w,h,d),me=new T.Mesh(g,m);me.position.set(x,y,z);scene.add(me);if(edge){const l=new T.LineSegments(new T.EdgesGeometry(g),new T.LineBasicMaterial({color:edge}));l.position.copy(me.position);scene.add(l);}return me;}
-function cyl(r,h,x,y,z,c){const me=new T.Mesh(new T.CylinderGeometry(r,r,h,20),mat(c,1));me.position.set(x,y,z);scene.add(me);}
-const wm=mat(0x888780,0.2),cm=mat(0xF4F2EA,0.3);
-const floor=new T.Mesh(new T.PlaneGeometry(OW,OL),mat(0xE3E0D5,1));floor.rotation.x=-Math.PI/2;floor.position.set(OW/2,-1,OL/2);scene.add(floor);
-function wall(x1,z1,x2,z2,t){box(Math.abs(x2-x1)||t,WH,Math.abs(z2-z1)||t,(x1+x2)/2,WH/2,(z1+z2)/2,wm,0x5F5E5A);}
-wall(0,0,OW,0,12);wall(0,0,0,OL,12);wall(OW,0,OW,OL,12);wall(0,OL,288,OL,12);wall(388,OL,OW,OL,12);
-wall(427,0,427,648,8);wall(427,302,OW,302,8);wall(0,648,OW,648,8);wall(414,648,414,OL,8);wall(626,648,626,OL,8);
-const E=0xB4B2A9;
-box(427,15,42,213.5,277.5,21,cm,E);box(427,15,42,213.5,277.5,627,cm,E);box(42,15,564,21,277.5,324,cm,E);box(42,15,564,406,277.5,324,cm,E);
-box(343,4,564,213.5,287,324,cm,E);
-const amb=new T.MeshBasicMaterial({color:0xFAC775});
-box(343,1.5,3,213.5,284,44,amb);box(343,1.5,3,213.5,284,604,amb);box(3,1.5,560,44,284,324,amb);box(3,1.5,560,383,284,324,amb);
-function slab(x,z,w,d){box(w,4,d,x+w/2,272,z+d/2,cm,E);}
-slab(427,0,351,302);slab(427,302,351,346);slab(0,648,414,234);slab(414,648,212,234);slab(626,648,152,234);
-const LM=new T.MeshBasicMaterial({color:0xFAC775});
-function L(x,z,y){box(60,3,60,x,y-1.5,z,LM,0x854F0B);}
-function S(x,z,y){box(23,4,23,x,y-2,z,mat(0x378ADD,1),0x0C447C);}
-function Rt(x,z,y){box(40,3,25,x,y-1.5,z,mat(0x185FA5,1),0x042C53);}
-function P(x,z,y){cyl(4,7,x,y-3.5,z,0xE24B4A);}
-function D(x,z,y){cyl(5.5,4,x,y-2,z,0x7F77DD);}
-function EM(x,z,y){box(36,6,12,x,y-3,z,mat(0x639922,1),0x27500A);}
-function K(x,z,y){cyl(8,3,x,y-1.5,z,0xFAC775);}
-function F(x,z,y){cyl(9,3,x,y-1.5,z,0x888780);}
-const A=285,B=270;
-[[115,104],[312,104],[115,242],[312,242],[115,404],[312,404],[115,543],[312,543]].forEach(p=>L(p[0],p[1],A));
-[[115,173],[312,173],[115,473],[312,473]].forEach(p=>S(p[0],p[1],A));
-[[212,97],[212,550]].forEach(p=>Rt(p[0],p[1],A));
-[[212,173],[212,473]].forEach(p=>P(p[0],p[1],A));
-[[212,247],[212,399]].forEach(p=>D(p[0],p[1],A));
-EM(212,323,A);
-[[508,69],[697,69],[508,233],[697,233],[508,381],[697,381],[508,566],[697,566],[74,711],[300,711],[520,750]].forEach(p=>L(p[0],p[1],B));
-S(603,58,B);P(603,150,B);Rt(603,242,B);D(499,150,B);
-S(603,369,B);P(603,473,B);Rt(603,573,B);D(499,473,B);
-S(185,688,B);P(185,762,B);D(242,804,B);Rt(58,813,B);
-box(40,14,6,338,235,874,mat(0x1D9E75,1),0x085041);
-P(520,836,B);K(702,757,B);F(702,831,B);
-const labels=[];
-function lab(t1,t2,x,z,s){const c=document.createElement('canvas');c.width=256;c.height=80;const g=c.getContext('2d');g.textAlign='center';g.lineWidth=5;g.strokeStyle='#fff';g.fillStyle='#2C2C2A';g.font='500 26px sans-serif';g.strokeText(t1,128,30);g.fillText(t1,128,30);if(t2){g.font='22px sans-serif';g.strokeText(t2,128,62);g.fillText(t2,128,62);}const sp=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(c),depthTest:false,transparent:true}));sp.position.set(x,5,z);sp.scale.set(s*3.2,s,1);scene.add(sp);labels.push(sp);}
-lab('Workstation','427 x 648 cm',100,323,50);lab('Manager 2','351 x 302 cm',560,196,50);lab('Manager 1','351 x 346 cm',560,420,50);
-lab('Reception','414 x 234 cm',110,850,50);lab('Kitchen','212 x 234',520,700,45);lab('Washroom','152 x 234',702,700,40);
-lab('778 cm','',389,OL+70,50);lab('882 cm','',-70,441,50);
-const TG=new T.Vector3(389,150,441);let a=-0.5,e=0.8,r=1500;
-function size(){const w=cv.clientWidth||360,h=cv.clientHeight||420;R.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
-function upd(){camera.position.set(TG.x+r*Math.cos(e)*Math.sin(a),TG.y+r*Math.sin(e),TG.z+r*Math.cos(e)*Math.cos(a));camera.lookAt(TG);R.render(scene,camera);}
-function mode(up){floor.visible=up;labels.forEach(l=>l.visible=up);cm.opacity=up?0.3:1;cm.transparent=up;cm.needsUpdate=true;TG.y=up?150:270;e=up?0.8:-0.9;r=up?1500:1300;upd();}
-document.getElementById('bA').onclick=()=>mode(true);document.getElementById('bB').onclick=()=>mode(false);
-document.getElementById('bP').onclick=()=>{r*=0.85;upd();};document.getElementById('bM').onclick=()=>{r*=1.18;upd();};
-let dn=false,px=0,py=0;
-cv.addEventListener('pointerdown',v=>{dn=true;px=v.clientX;py=v.clientY;cv.setPointerCapture(v.pointerId);});
-cv.addEventListener('pointermove',v=>{if(!dn)return;a-=(v.clientX-px)*0.008;e=Math.max(-1.45,Math.min(1.45,e+(v.clientY-py)*0.008));px=v.clientX;py=v.clientY;upd();});
-cv.addEventListener('pointerup',()=>{dn=false;});
-cv.addEventListener('wheel',v=>{v.preventDefault();r*=v.deltaY>0?1.08:0.93;upd();},{passive:false});
-window.addEventListener('resize',()=>{size();upd();});
-size();upd();
-</script>
-</body>
-</html>
+const W=778,D=882,cv=document.getElementById('c');
+const dark=false;
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true});R.setPixelRatio(devicePixelRatio);
+const S=new THREE.Scene();S.background=new THREE.Color(dark?0x1e1f22:0xefede7);
+const cam=new THREE.PerspectiveCamera(40,1,10,10000);
+S.add(new THREE.AmbientLight(0xffffff,.75));const dl=new THREE.DirectionalLight(0xffffff,.6);dl.position.set(-300,900,500);S.add(dl);
+const root=new THREE.Group();root.position.set(-W/2,0,-D/2);S.add(root);
+const C={desk:0xc98b4f,chair:0x333a45,vchair:0x2a9d8f,sofa:0x7a8ca8,counter:0xf4f1ea,panel:0xe07a2f,plant:0x3f9e4a,sani:0x9fd3ea,fridge:0xb8bcc2,part:0x66c2d9};
+const NAME={desk:'Desk / Table',chair:'Staff chair',vchair:'Visitor chair',sofa:'Sofa set',counter:'Counter / Basin / WC',panel:'CTI wall panel',plant:'Plant',fridge:'Fridge',part:'Glass partition'};
+const used={};const lab=new THREE.Group(),rl=new THREE.Group();root.add(lab,rl);
+function label(t,x,y,z,g,w=110,col='#111',bg='rgba(255,255,255,.85)'){const c=document.createElement('canvas');c.width=256;c.height=64;const x2=c.getContext('2d');x2.fillStyle=bg;x2.fillRect(0,0,256,64);x2.fillStyle=col;x2.font='bold 30px Arial';x2.textAlign='center';x2.textBaseline='middle';x2.fillText(t,128,34);
+const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),depthTest:false}));s.scale.set(w,w/4,1);s.position.set(x,y,z);s.renderOrder=9;g.add(s);}
+function add(type,x,z,w,d,h,y0=0,l=true){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:C[type],transparent:type=='part',opacity:type=='part'?.4:1}));
+m.position.set(x+w/2,y0+h/2,z+d/2);root.add(m);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x00000055})));
+if(l){(used[type]=used[type]||new Set()).add(w+'×'+d);label(w+'×'+d,x+w/2,y0+h+10,z+d/2,lab,Math.max(60,Math.min(w,110)))}return m}
+function chair(x,z,back,t='chair'){add(t,x-22,z-22,45,45,8,42);add(t,x-3,z-3,6,6,42,0,false);
+const b={n:[x-22,z-22,45,6],s:[x-22,z+16,45,6],w:[x-22,z-22,6,45],e:[x+16,z-22,6,45]}[back];add(t,b[0],b[1],b[2],b[3],40,50,false)}
+function plant(x,z){const m=new THREE.Mesh(new THREE.CylinderGeometry(15,12,70,12),new THREE.MeshLambertMaterial({color:C.plant}));m.position.set(x,35,z);root.add(m);(used.plant=used.plant||new Set()).add('Ø30×70')}
+// floor + room labels (original layout)
+const rooms=[['Workstation',0,0,427,648],['Manager 2',427,0,351,302],['Manager 1',427,302,351,346],['Reception',0,648,414,234],['Kitchen',414,648,212,234],['Washroom',626,648,152,234]];
+const fm=new THREE.Mesh(new THREE.PlaneGeometry(W,D),new THREE.MeshLambertMaterial({color:dark?0x34363b:0xffffff,side:THREE.DoubleSide}));fm.rotation.x=-Math.PI/2;fm.position.set(W/2,0,D/2);root.add(fm);
+rooms.forEach(([n,x,z,w,d])=>label(n+' '+w+'×'+d+' cm',x+w/2,3,z+d/2+(n=='Workstation'?-20:30),rl,150,'#555','rgba(255,255,255,.7)'));
+label('882 cm',-30,3,D/2,rl,90,'#555','rgba(255,255,255,.7)');label('778 cm',W/2,3,D+30,rl,90,'#555','rgba(255,255,255,.7)');
+const wm=new THREE.MeshLambertMaterial({color:0xaaaaaa,transparent:true,opacity:.22,side:THREE.DoubleSide});
+function wall(x,z,w,d){const m=new THREE.Mesh(new THREE.BoxGeometry(w,270,d),wm);m.position.set(x+w/2,135,z+d/2);root.add(m);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x888888})))}
+wall(-12,0,12,D);wall(W,0,12,D);wall(0,-12,W,12);wall(0,D,270,12);wall(360,D,W-360,12);wall(427,0,8,648);wall(427,296,351,12);wall(427,648,351,8);wall(414,648,8,234);wall(626,648,8,234);
+// ---- FURNITURE (placed as in the render)
+// Workstation: 6 desks (3 columns x 2) + chairs
+[10,153,297].forEach(x=>{add('desk',x,225,120,60,75);add('desk',x,295,120,60,75);add('part',x,285,120,4,110,0,false);chair(x+60,203,'n');chair(x+60,377,'s')});
+// left & right corner tables + chairs + plants
+add('desk',30,20,120,60,75);add('desk',30,80,60,60,75);chair(120,110,'w');plant(14,30);
+add('desk',285,20,120,60,75);add('desk',345,80,60,60,75);chair(310,115,'e');plant(415,30);
+// Manager 2 (L desk top-right + chair + plant)
+add('desk',600,25,150,60,75);add('desk',690,85,60,70,75);chair(645,125,'w');plant(762,30);
+// Manager 1 (L desk + chair + 2 plants)
+add('desk',560,372,170,60,75);add('desk',670,432,60,80,75);chair(600,470,'s');plant(755,325);plant(762,580);
+// Reception: CTI wood panel, U counter, chair, plants
+add('panel',5,652,195,8,230);add('panel',5,652,8,200,230,0,false);
+add('counter',31,763,30,99,105);add('counter',31,805,160,57,105,0,false);add('counter',122,731,69,60,105);chair(90,765,'e');
+plant(218,762);plant(218,845);plant(367,860);
+// Kitchen: counter + sink / Washroom: basin + WC
+add('counter',418,660,50,200,90);add('counter',428,700,30,40,8,90);
+add('counter',745,690,30,45,85);add('counter',735,775,40,60,40);add('counter',735,815,40,20,80,0,false);
+// ---- CEILING LAYER (original lights / AC / points, same colours)
+const ce=new THREE.Group();root.add(ce);
+function ceil(x,z,w,d,col,op=1){const m=new THREE.Mesh(new THREE.BoxGeometry(w,4,d),new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:op}));m.position.set(x,268,z);m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:0x00000044})));ce.add(m)}
+function dot(x,z,col,r=6){const m=new THREE.Mesh(new THREE.SphereGeometry(r,10,8),new THREE.MeshBasicMaterial({color:col}));m.position.set(x,268,z);ce.add(m)}
+[[113,93],[310,93],[110,226],[309,226],[105,386],[308,386],[102,527],[306,527],[504,66],[691,66],[506,221],[695,223],[507,367],[699,367],[509,552],[703,552],[58,700],[293,700],[522,744]].forEach(p=>ceil(p[0],p[1],60,60,0xfad6a0,.8));
+[[211,86,45,30],[202,534,45,30],[601,231,42,26],[606,559,42,26],[38,808,42,26]].forEach(p=>ceil(...p.slice(0,2),p[2],p[3],0x4a86d6));
+[[112,159],[310,159],[105,455],[307,455],[598,57],[603,355],[174,677]].forEach(p=>ceil(p[0],p[1],26,27,0x66b2f2));
+[[210,160],[205,456],[599,143],[604,459],[604,459],[172,754],[523,835]].forEach(p=>dot(p[0],p[1],0xe8606a));
+[[208,231],[206,382],[496,143],[498,459],[231,799]].forEach(p=>dot(p[0],p[1],0x9b8cf0));
+ceil(206,306,40,14,0x7cb342);ceil(332,867,50,16,0x3bb5a0);dot(712,751,0xf2d94e,8);dot(715,830,0x999999,8);
+{const g=new THREE.BufferGeometry().setFromPoints([[26,37],[382,37],[382,591],[26,591]].map(p=>new THREE.Vector3(p[0],268,p[1])));ce.add(new THREE.LineLoop(g,new THREE.LineBasicMaterial({color:0xf0b44c})))}
+// ---- camera controls
+let th=0,ph=.02,rad=1500;
+function upd(){cam.position.set(rad*Math.sin(ph)*Math.sin(th),rad*Math.cos(ph),rad*Math.sin(ph)*Math.cos(th));cam.lookAt(0,0,0)}
+function size(){R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();rad=Math.max(rad,0)}
+addEventListener('resize',size);size();upd();
+const P=new Map();let pd=0;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);P.set(e.pointerId,[e.clientX,e.clientY]);pd=0});
+cv.addEventListener('pointerup',e=>P.delete(e.pointerId));cv.addEventListener('pointercancel',e=>P.delete(e.pointerId));
+cv.addEventListener('pointermove',e=>{if(!P.has(e.pointerId))return;const o=P.get(e.pointerId);
+if(P.size==1){th-=(e.clientX-o[0])*.008;ph=Math.min(3.12,Math.max(.02,ph-(e.clientY-o[1])*.008));P.set(e.pointerId,[e.clientX,e.clientY])}
+else{P.set(e.pointerId,[e.clientX,e.clientY]);const a=[...P.values()],d=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]);if(pd)rad=Math.min(4000,Math.max(300,rad*pd/d));pd=d}upd()});
+cv.addEventListener('wheel',e=>{rad=Math.min(4000,Math.max(300,rad*(1+e.deltaY*.001)));upd()},{passive:true});
+const $=id=>document.getElementById(id);
+$('top').onclick=()=>{th=0;ph=.02;rad=1500;upd()};$('fb').onclick=()=>{th=0;ph=3.12;rad=1500;upd()};$('cl').onclick=()=>{ce.visible=!ce.visible;$('cl').textContent='Lights/AC: '+(ce.visible?'ON':'OFF')};
+$('iso').onclick=()=>{th=-.6;ph=.95;rad=1500;upd()};
+$('zi').onclick=()=>{rad=Math.max(300,rad*.8);upd()};$('zo').onclick=()=>{rad=Math.min(4000,rad*1.25);upd()};
+$('sz').onclick=()=>{lab.visible=!lab.visible;$('sz').textContent='Sizes: '+(lab.visible?'ON':'OFF')};
+$('lg').onclick=()=>{const l=$('leg');l.style.display=l.style.display=='none'?'block':'none'};
+// legend
+$('leg').innerHTML='<div><b style="margin:0">Total 778 × 882 cm. Sizes in cm (W×D). Ceiling: Amber = LED panels and cove, Blue = AC, other dots = original points</b></div>'+Object.keys(used).map(k=>`<div><i style="background:#${C[k].toString(16).padStart(6,'0')}"></i>${NAME[k]}<b>${[...used[k]].join(', ')}</b></div>`).join('');
+(function loop(){requestAnimationFrame(loop);R.render(S,cam)})();
+</script></body></html>
